@@ -33,10 +33,33 @@
 // console.log(Date.now() - startTime);
 
 // task 3
-let clock = setInterval(() => {
+let btn = document.getElementById("toggleClock");
+let isRunning = false;
+let clockInterval;
+btn.addEventListener("click", () => {
+  if (isRunning) {
+    end();
+
+    btn.textContent = "Start";
+  } else {
+    start();
+    btn.textContent = "Pause";
+  }
+});
+function start() {
+  if (!isRunning) isRunning = true;
+  clockInterval = setInterval(updateTime, 1000);
+}
+function end() {
+  if (isRunning) isRunning = false;
+  clearInterval(clockInterval);
+}
+function updateTime() {
   const time = new Date();
-  const hours = time.getHours();
-  const minutes = time.getMinutes();
-  const seconds = time.getSeconds();
-  console.log(`${hours} : ${minutes} : ${seconds}`);
-}, 1000);
+  const hours = String(time.getHours()).padStart(2, "0");
+  const minutes = String(time.getMinutes()).padStart(2, "0");
+  const seconds = String(time.getSeconds()).padStart(2, "0");
+  document.getElementById(
+    "clock"
+  ).textContent = `${hours}:${minutes}:${seconds}`;
+}
