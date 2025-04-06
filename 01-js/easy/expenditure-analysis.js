@@ -16,7 +16,7 @@
 function calculateTotalSpentByCategory(transactions) {
   // return list with objects containing category and price spent
   // const output = [];
-  const arr = [];
+  // const arr = [];
   // transactions.map((obj) => {
   //   output.push({ category: obj.category, totalSpent: obj.price });
   // });
@@ -33,16 +33,21 @@ function calculateTotalSpentByCategory(transactions) {
   //     arr[index].totalSpent = arr[index]["totalSpent"] + transactions[i].price;
   //   }
   // }
-  transactions.forEach((element) => {
-    let index = arr.findIndex((item) => item.category == element.category);
-    if (index == -1) {
-      arr.push({ category: element.category, totalSpent: element.price });
-    } else arr[index].totalSpent += element.price;
-  });
-  console.log(arr);
 
-  return arr;
+  // reduce --> callback function and initial value as parameter
+  let count = 0;
+  const result = transactions.reduce((arr, curr) => {
+    let index = arr.findIndex((item) => item.category == curr.category);
+    count++;
+    if (index == -1) {
+      arr.push({ category: curr.category, totalSpent: curr.price });
+    } else arr[index].totalSpent += curr.price;
+    return arr;
+  }, []);
+  console.log(count);
+  return result;
 }
+
 calculateTotalSpentByCategory([
   {
     id: 1,
